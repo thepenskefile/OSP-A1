@@ -3,6 +3,7 @@
 
 #include "utility.h"
 #include "scheduler.h"
+#include "process.h"
 
 #define PROCESS_ID_LENGTH 4
 #define BURST_TIME_LENGTH 4
