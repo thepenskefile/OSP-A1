@@ -48,12 +48,28 @@ Boolean load_processes(Scheduler* scheduler, const char* processes_file_name) {
                 
                 process = create_process(process_id, burst_time, arrival_time);                
                 
-                add_to_queue(scheduler -> waiting_queue, process);                
+                add_to_queue(scheduler -> ready_queue, process);                
                 token = strtok(NULL, "\t\n");
             }
         }
         fclose(processes_file);
     }
 
+    return FALSE;
+}
+
+Boolean set_algorithm(Scheduler* scheduler, const char* algorithm_name) {
+    if(strcmp(algorithm_name, FCFS) == 0) {
+        scheduler -> algorithm = FIRST_COME_FIRST_SERVE;
+        return TRUE;
+    }
+    if(strcmp(algorithm_name, SJF) == 0) {
+        scheduler -> algorithm = SHORTEST_JOB_FIRST;
+        return TRUE;
+    }
+    if(strcmp(algorithm_name, RR) == 0) {
+        scheduler -> algorithm = ROUND_ROBIN;
+        return TRUE;
+    }
     return FALSE;
 }
