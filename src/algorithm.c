@@ -17,8 +17,11 @@ Boolean run_algorithm(Scheduler* scheduler) {
 
 Boolean first_come_first_serve(Scheduler* scheduler) {
     printf("Running FCFS \n");
+    if(scheduler -> ready_queue -> head == NULL && scheduler -> current == NULL) {
+        return TRUE;
+    }
     /* If there is no current process running, schedule a new process to begin */
-    if(scheduler -> current == NULL) {
+    if(scheduler -> current == NULL && scheduler -> ready_queue -> head != NULL) {
         /* The new process to begin running is the first in the queue */
         scheduler -> current = scheduler -> ready_queue -> head;
         /* Remove the running process from the ready queue */

@@ -60,12 +60,12 @@ void print_queue(Queue* queue) {
 }
 
 int count_nodes(Queue* queue) {
-    Process* print_pointer;
+    Process* process;
     int count = 0;
-    print_pointer = queue -> head;
-    while(print_pointer != NULL) {
+    process = queue -> head;
+    while(process != NULL) {
         count++;
-        print_pointer = print_pointer -> next;
+        process = process -> next;
     }
     return count;
 }
