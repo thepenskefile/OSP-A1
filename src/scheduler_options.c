@@ -1,5 +1,4 @@
 #include "scheduler_options.h"
-#include "scheduler.h"
 
 Boolean load_processes(Queue* queue, const char* processes_file_name) {
     if(processes_file_name != NULL){

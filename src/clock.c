@@ -13,7 +13,7 @@ Clock* create_clock() {
 }
 
 Clock* tick_clock(Clock* clock) {
-    int current_tick = clock -> current_tick || 0;
+    int current_tick = clock -> current_tick;
     current_tick++;    
     clock -> current_tick = current_tick;
     return clock;

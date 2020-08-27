@@ -19,7 +19,9 @@ Queue* create_queue();
 
 /* Adds a node (process) to a queue */
 Boolean add_to_queue(Queue* queue, Process* process, Boolean add_to_end);
-/* Prints the contents of the queue */
+/* Prints the contents of a queue */
 void print_queue(Queue* queue);
+/* Counts the number of nodes in a queue */
+int count_nodes(Queue* queue);
 
 #endif

@@ -58,3 +58,14 @@ void print_queue(Queue* queue) {
         print_pointer = print_pointer -> next;
     }
 }
+
+int count_nodes(Queue* queue) {
+    Process* print_pointer;
+    int count = 0;
+    print_pointer = queue -> head;
+    while(print_pointer != NULL) {
+        count++;
+        print_pointer = print_pointer -> next;
+    }
+    return count;
+}
