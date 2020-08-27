@@ -8,31 +8,53 @@ Queue* create_queue() {
     }
 
     queue -> head = NULL;
-    queue -> current = NULL;
 
     return queue;
 }
 
-Queue* add_to_queue(Queue *queue, Process *process) {
-    // If a queue does not exist, a node cannot be added to it
+Boolean add_to_queue(Queue *queue, Process *process, Boolean add_to_end) {
+    /* If a queue does not exist, a node cannot be added to it */
     if(queue == NULL) {
         printf("\n Queue does not exist \n");
-        return NULL;
+        return FALSE;
     }
-
-    // If a queue does not exist, a node cannot be added to it
+    /* If a queue does not exist, a node cannot be added to it */
     if(process == NULL) {
         printf("\n Process does not exist \n");
-        return NULL;
+        return FALSE;
     }
-
-    // If this is the first item being added to the queue
+    /* If this is the first item being added to the queue */
     if(queue -> head == NULL) {
         queue -> head = process;
+        queue -> end = queue -> head;
+    }
+    else {
+
+        if(add_to_end) {
+            queue -> end -> next = process;
+            queue -> end = process;
+        }
+        else {
+            process -> next = queue -> head;
+            queue -> head = process;   
+        }
+        
     }
 
-    // Create a pointer from the last node in the queue to the new node
-    queue -> current -> next = process;
+    return TRUE;
+}
 
-    return queue;
+void print_queue(Queue* queue) {
+    Process* print_pointer;
+
+    print_pointer = queue -> head;
+    while(print_pointer != NULL) {
+        printf(
+            "ID: %ld | Burst time: %ld | Arrival time: %ld \n", 
+            print_pointer->id, 
+            print_pointer->burst_time, 
+            print_pointer->arrival_time
+        );
+        print_pointer = print_pointer -> next;
+    }
 }

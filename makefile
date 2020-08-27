@@ -1,5 +1,5 @@
-SOURCES=process.c queue.c scheduler.c
-HEADERS=process.h queue.h scheduler.c
+SOURCES=process.c queue.c scheduler.c clock.c scheduler_options.c
+HEADERS=process.h queue.h scheduler.h clock.h scheduler_options.h utility.h
 PROGRAM=scheduler
 DEBUG=-g
 FLAGS=-ansi -pedantic -Wall $(DEBUG)
