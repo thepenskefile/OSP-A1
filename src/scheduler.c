@@ -25,7 +25,6 @@ int main(int argc, char ** argv) {
     }
 
     load_processes(processes, file_name);
-    printf("MADE IT \n");
 
     /* TESTING ONLY */
     /*
@@ -50,22 +49,18 @@ int run_scheduler(Scheduler* scheduler, Queue* processes) {
         printf("NODES IN PROCESSES: %d \n", count_nodes(processes));
         printf("NODES IN READY: %d \n", count_nodes(scheduler -> ready_queue));
         move_to_ready(scheduler, processes, clock);
-        printf("MADE IT 3 \n");
         run_algorithm(scheduler);
-        printf("MADE IT 4 \n");
+        tick_clock(clock);
     }
-    printf("MADE IT 5 \n");
-    tick_clock(clock);
 
     return TRUE;
 
 }
 
 void move_to_ready(Scheduler* scheduler, Queue* processes, Clock* clock) {
-    Process* current;
-    Process* previous;
-    Process* delete;
-    printf("MADE IT 1 \n");
+    Process* current = NULL;
+    Process* previous = NULL;
+    Process* delete = NULL;
 
     current = processes -> head;
     while(current != NULL) {
@@ -86,6 +81,5 @@ void move_to_ready(Scheduler* scheduler, Queue* processes, Clock* clock) {
             previous = current;
             current = current -> next; 
         }
-        printf("MADE IT 2 \n");              
     }
 }

@@ -6,7 +6,7 @@ EXE := $(BIN_DIR)/scheduler
 SRC := $(wildcard $(SRC_DIR)/*.c)
 OBJ := $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 DEBUG=-g
-FLAGS=-ansi -pedantic -Wall $(DEBUG)
+FLAGS=-ansi -pedantic -w -Wall -Wextra $(DEBUG)
 
 all:
 	gcc $(FLAGS) -o $(EXE) $(SRC)
