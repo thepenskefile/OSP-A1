@@ -51,7 +51,7 @@ int run_scheduler(Scheduler* scheduler, Queue* processes) {
         printf("NODES IN READY: %d \n", count_nodes(scheduler -> ready_queue));
         print_queue(scheduler -> ready_queue);
         if(scheduler -> current != NULL) {
-            printf("CURRENT PROCESS = ID: %d | BURST: %d | ARRIVAL: %d \n", scheduler -> current -> id, scheduler -> current -> burst_time, scheduler -> current -> arrival_time);
+            printf("CURRENT PROCESS = ID: %d | BURST: %d | ARRIVAL: %d \n", scheduler -> current -> id, scheduler -> current -> remaining_burst_time, scheduler -> current -> arrival_time);
         }
         run_algorithm(scheduler);
         tick_clock(clock);

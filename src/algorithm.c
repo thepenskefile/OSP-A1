@@ -16,6 +16,7 @@ Boolean run_algorithm(Scheduler* scheduler) {
 }
 
 Boolean first_come_first_serve(Scheduler* scheduler) {
+    Process* process;
     printf("Running FCFS \n");
     if(scheduler -> ready_queue -> head == NULL && scheduler -> current == NULL) {
         return TRUE;
@@ -28,12 +29,18 @@ Boolean first_come_first_serve(Scheduler* scheduler) {
         scheduler -> ready_queue -> head = scheduler -> ready_queue -> head -> next;
     }
     /* The burst time of the currently running process is decreased by one clock tick */
-    scheduler -> current -> burst_time--;
+    scheduler -> current -> remaining_burst_time--;
     /* If the burst time of the current process is 0, that means the process has finished running
         and can be removed */
-    if(scheduler -> current -> burst_time == 0) {
+    if(scheduler -> current -> remaining_burst_time == 0) {
         free(scheduler -> current);
         scheduler -> current = NULL;
+    }
+    /* Increase the waiting time of each process still in the ready queue by one clock tick */
+    process = scheduler -> ready_queue -> head;
+    while(process != NULL) {
+        process -> waiting_time++;
+        process = process -> next;
     }
     return TRUE;
 }

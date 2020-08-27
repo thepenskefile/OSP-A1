@@ -14,6 +14,7 @@ Process* create_process(long process_id, long burst_time, long arrival_time) {
     process -> burst_time = burst_time;
     process -> arrival_time = arrival_time;
     process -> waiting_time = 0;
+    process -> remaining_burst_time = burst_time;
     process -> next = NULL;
 
     return process;
