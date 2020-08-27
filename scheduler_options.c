@@ -1,7 +1,7 @@
 #include "scheduler_options.h"
 #include "scheduler.h"
 
-Boolean load_processes(Scheduler* scheduler, const char* processes_file_name) {
+Boolean load_processes(Queue* queue, const char* processes_file_name) {
     if(processes_file_name != NULL){
         FILE* processes_file = NULL;
         int file_char_counter = 0;
@@ -48,7 +48,7 @@ Boolean load_processes(Scheduler* scheduler, const char* processes_file_name) {
                 
                 process = create_process(process_id, burst_time, arrival_time);                
                 
-                add_to_queue(scheduler -> ready_queue, process);                
+                add_to_queue(queue, process, TRUE);                
                 token = strtok(NULL, "\t\n");
             }
         }

@@ -12,7 +12,7 @@
 #define SJF "sjf"
 #define RR "rr"
 
-Boolean load_processes(Scheduler* scheduler, const char* processes_file_name);
+Boolean load_processes(Queue* queue, const char* processes_file_name);
 Boolean set_algorithm(Scheduler* scheduler, const char* algorithm_name);
 
 #endif

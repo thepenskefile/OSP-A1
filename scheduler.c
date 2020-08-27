@@ -1,19 +1,15 @@
 #include "scheduler.h"
 #include "scheduler_options.h"
 
-/* 1. file location */
-/* 2. name of the scheduler */
 int main(int argc, char ** argv) {
     const char* file_name;
     const char* algorithm;
     Scheduler scheduler;
+    Queue* processes;
     Queue* ready_queue;
-    /* TESTING */
-    Process* debug_pointer;
 
     scheduler.ready_queue = ready_queue = create_queue();
-
-    printf("ARGC: %d\n", argc);
+    processes = create_queue();
 
     if(argc != NUMBER_ARGUMENTS){
         fprintf(stderr, "Error! Usage:\n\t%s <process file> <algorithm>\n", argv[0]);
@@ -28,15 +24,10 @@ int main(int argc, char ** argv) {
 		exit(EXIT_FAILURE);
     }
 
-    load_processes(&scheduler, file_name);
+    load_processes(processes, file_name);
 
     /* TESTING ONLY */
-    debug_pointer = scheduler.ready_queue->head;
-    while(debug_pointer != NULL) {
-        printf("ID: %ld\n", debug_pointer->id);
-        debug_pointer = debug_pointer -> next;
-    }
-    printf("ALGORITHM: %d\n", (int)scheduler.algorithm);
+    print_queue(processes);
 
     run_scheduler(&scheduler);
     return EXIT_SUCCESS;

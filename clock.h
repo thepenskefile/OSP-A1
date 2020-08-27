@@ -6,7 +6,7 @@
 #include <string.h>
 
 typedef struct clock {
-    int current_tick;
+    float current_tick;
 } Clock;
 
 Clock* create_clock();
