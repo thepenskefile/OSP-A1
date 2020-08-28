@@ -80,8 +80,7 @@ void move_to_ready(Scheduler* scheduler, Queue* processes, Clock* clock) {
                 previous -> next = current -> next;
                 free(current);
                 current = current -> next;
-            }      
-
+            }
         }
         else {
             previous = current;

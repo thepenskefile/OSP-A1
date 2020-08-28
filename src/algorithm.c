@@ -11,7 +11,6 @@ Boolean run_algorithm(Scheduler* scheduler) {
     else if(scheduler -> algorithm == ROUND_ROBIN) {
         return round_robin(scheduler);
     }
-
     return FALSE;
 }
 
