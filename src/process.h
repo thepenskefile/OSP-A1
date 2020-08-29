@@ -6,7 +6,7 @@ typedef struct process {
     long id;
     long burst_time;
     long arrival_time;
-    float waiting_time;
+    long waiting_time;
     long remaining_burst_time;
     struct process *next;
 } Process;
