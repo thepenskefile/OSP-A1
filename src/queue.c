@@ -50,10 +50,10 @@ void print_queue(Queue* queue) {
     print_pointer = queue -> head;
     while(print_pointer != NULL) {
         printf(
-            "ID: %ld | Burst time: %ld | Arrival time: %ld | Waiting time: %ld \n", 
-            print_pointer->id, 
-            print_pointer->burst_time, 
-            print_pointer->arrival_time,
+            "ID: %ld | Burst time: %f | Arrival time: %ld | Waiting time: %f \n", 
+            print_pointer -> id, 
+            print_pointer -> burst_time, 
+            print_pointer -> arrival_time,
             print_pointer -> waiting_time
         );
         print_pointer = print_pointer -> next;

@@ -1,5 +1,20 @@
 #include "cpu_scheduler.h"
 
+
+Scheduler* create_scheduler() {
+    Queue* ready_queue;
+    Scheduler *scheduler = (Scheduler*)malloc(sizeof(Scheduler));
+    
+    scheduler -> ready_queue = ready_queue = create_queue();
+    scheduler -> current = NULL;
+    scheduler -> quantum = QUANTUM;
+    scheduler -> quantum_used = 0;
+    scheduler -> context_switch = CONTEXT_SWITCH;
+    scheduler -> is_first_process = TRUE;
+
+    return scheduler;
+}
+
 Queue* run_scheduler(Scheduler* scheduler, Queue* processes) {
     Clock* clock;
     Queue* finished_processes;
@@ -20,7 +35,7 @@ Queue* run_scheduler(Scheduler* scheduler, Queue* processes) {
         printf("NODES IN READY: %d \n", count_nodes(scheduler -> ready_queue));
         print_queue(scheduler -> ready_queue);
         if(scheduler -> current != NULL) {
-            printf("CURRENT PROCESS = ID: %d | BURST: %d | ARRIVAL: %d \n", scheduler -> current -> id, scheduler -> current -> remaining_burst_time, scheduler -> current -> arrival_time);
+            printf("CURRENT PROCESS = ID: %d | BURST: %f | ARRIVAL: %d \n", scheduler -> current -> id, scheduler -> current -> remaining_burst_time, scheduler -> current -> arrival_time);
         }
         run_algorithm(scheduler, finished_processes);
         tick_clock(clock);
@@ -95,8 +110,11 @@ Queue* first_come_first_serve(Scheduler* scheduler, Queue* finished_processes) {
     /* Increase the waiting time of each process still in the ready queue by one clock tick */
     process = scheduler -> ready_queue -> head;
     while(process != NULL) {
-        process -> waiting_time++;
+        process -> waiting_time = process -> waiting_time + BURST;
         process = process -> next;
+    }
+    if(scheduler -> is_first_process == TRUE) {
+        scheduler -> is_first_process = FALSE;
     }
     return finished_processes;
 }
@@ -146,14 +164,72 @@ Queue* shortest_job_first(Scheduler* scheduler, Queue* finished_processes) {
     /* Increase the waiting time of each process still in the ready queue by one clock tick */
     process = scheduler -> ready_queue -> head;
     while(process != NULL) {
-        process -> waiting_time++;
+        process -> waiting_time = process -> waiting_time + BURST;
         process = process -> next;
+    }
+
+    if(scheduler -> is_first_process == TRUE) {
+        scheduler -> is_first_process = FALSE;
     }
     return finished_processes;
 }
 
 Queue* round_robin(Scheduler* scheduler, Queue* finished_processes) {
-    /* Implement algorithm here */
+    Process* process;
+    Boolean context_switch_applied = FALSE;
     printf("Running RR \n");
+    if(scheduler -> ready_queue -> head == NULL && scheduler -> current == NULL) {
+        return finished_processes;
+    }
+    /**
+     * Check if maximum quantum has been used on current process. If it has, move it
+     * to the end of the ready queue
+     * */
+    if(scheduler -> quantum_used == QUANTUM) {
+        add_to_queue(scheduler -> ready_queue, scheduler -> current, TRUE);
+        scheduler -> current = NULL;
+        scheduler -> quantum_used = 0;
+    }
+    /* If there is no current process running, schedule a new process to begin */
+    if(scheduler -> current == NULL && scheduler -> ready_queue -> head != NULL) {
+        /* The new process to begin running is the first in the queue */
+        scheduler -> current = scheduler -> ready_queue -> head;
+        /* Remove the running process from the ready queue */
+        scheduler -> ready_queue -> head = scheduler -> ready_queue -> head -> next;
+        /**
+         * Apply context switch to waiting time of current process if:
+         * 1. The current process was not the only process in the ready queue
+         * 2. The current process was not the first process
+         * */
+        if(scheduler -> ready_queue -> head != NULL && scheduler -> is_first_process == FALSE) {
+            scheduler -> current -> waiting_time = scheduler -> current -> waiting_time + CONTEXT_SWITCH;
+            context_switch_applied = TRUE;
+        }
+        scheduler -> current -> next = NULL;
+    }
+    if(context_switch_applied == TRUE) {
+        scheduler -> current -> remaining_burst_time = 
+            scheduler -> current -> remaining_burst_time - (BURST - CONTEXT_SWITCH);
+    }
+    else {
+        scheduler -> current -> remaining_burst_time = scheduler -> current -> remaining_burst_time - BURST;
+    }
+    scheduler -> quantum_used = scheduler -> quantum_used + BURST;
+    /* If the burst time of the current process is 0, that means the process has finished running
+    and can be removed */
+    if(scheduler -> current -> remaining_burst_time <= 0) {
+        add_to_queue(finished_processes, scheduler -> current, TRUE);
+        scheduler -> current = NULL;
+    }
+    /* Increase the waiting time of each process still in the ready queue by one clock tick */
+    process = scheduler -> ready_queue -> head;
+    while(process != NULL) {
+        process -> waiting_time = process -> waiting_time + BURST;
+        printf("WTF");
+        process = process -> next;
+    }
+    if(scheduler -> is_first_process == TRUE) {
+        scheduler -> is_first_process = FALSE;
+    }
     return finished_processes;
 }

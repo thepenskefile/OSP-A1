@@ -4,10 +4,10 @@
 /* A structure to represent a process. Stores the value of the process and a pointer to the next process in a queue */
 typedef struct process {
     long id;
-    long burst_time;
+    double burst_time;
     long arrival_time;
-    long waiting_time;
-    long remaining_burst_time;
+    double waiting_time;
+    double remaining_burst_time;
     struct process *next;
 } Process;
 

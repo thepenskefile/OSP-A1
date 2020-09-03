@@ -5,6 +5,10 @@
 #include "queue.h"
 #include "clock.h"
 
+#define QUANTUM 2
+#define CONTEXT_SWITCH 0.1
+#define BURST 1
+
 typedef enum {
     FIRST_COME_FIRST_SERVE,
     SHORTEST_JOB_FIRST,
@@ -15,8 +19,13 @@ typedef struct scheduler {
     Queue* ready_queue;
     Algorithm algorithm;
     Process* current;
+    long quantum;
+    long quantum_used;
+    double context_switch;
+    Boolean is_first_process;
 } Scheduler;
 
+Scheduler* create_scheduler();
 Queue* run_scheduler(Scheduler* scheduler, Queue* processes);
 void move_to_ready(Scheduler* scheduler, Queue* processes, Clock* clock);
 Queue* run_algorithm(Scheduler* scheduler, Queue* finished_processes);
