@@ -45,7 +45,7 @@ void move_to_ready(Scheduler* scheduler, Queue* processes, Clock* clock) {
     current = processes -> head;
     while(current != NULL) {
         if(current -> arrival_time == clock -> current_tick) {
-            remove = create_process(current -> id, current -> burst_time, current -> arrival_time);
+            remove = create_process(current -> id, current -> burst_time, current -> arrival_time);  
             add_to_queue(scheduler -> ready_queue, remove, TRUE);
             if(previous == NULL) {
                 processes -> head = current -> next;
@@ -119,7 +119,6 @@ Queue* shortest_job_first(Scheduler* scheduler, Queue* finished_processes) {
     }
     /* If there is no current process running, schedule a new process to begin */
     if(scheduler -> current == NULL && scheduler -> ready_queue -> head != NULL) {
-        /* The new process to begin running is that with the shortest burst time in the queue */
         process = scheduler -> ready_queue -> head;
         shortest_job = process;
         while(process != NULL) {
@@ -145,7 +144,7 @@ Queue* shortest_job_first(Scheduler* scheduler, Queue* finished_processes) {
     /* The burst time of the currently running process is decreased by one clock tick */
     scheduler -> current -> remaining_burst_time--;
     /* If the burst time of the current process is 0, that means the process has finished running
-    and can be removed */
+        and can be removed */
     if(scheduler -> current -> remaining_burst_time == 0) {
         add_to_queue(finished_processes, scheduler -> current, TRUE);
         scheduler -> current = NULL;
@@ -156,7 +155,6 @@ Queue* shortest_job_first(Scheduler* scheduler, Queue* finished_processes) {
         process -> waiting_time = process -> waiting_time + BURST;
         process = process -> next;
     }
-
     return finished_processes;
 }
 

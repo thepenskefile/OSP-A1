@@ -12,7 +12,7 @@ typedef struct process {
 } Process;
 
 /* Function that returns pointer to process created with passed parameters */
-Process* create_process(long process_id, long burst_time, long arrival_time);
+Process* create_process(long process_id, double burst_time, long arrival_time);
 /* Function to calculate the turnaround time of a process */
 double calculate_turnaround_time(Process* process);
 

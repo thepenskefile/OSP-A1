@@ -4,7 +4,7 @@
 
 #include "process.h"
 
-Process* create_process(long process_id, long burst_time, long arrival_time) {
+Process* create_process(long process_id, double burst_time, long arrival_time) {
     Process *process = (Process*)malloc(sizeof(Process));
     if(process == NULL) {
         printf("\n Process creation failed \n");

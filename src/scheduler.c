@@ -10,6 +10,8 @@ int main(int argc, char ** argv) {
     scheduler = create_scheduler();
     processes = create_queue();
 
+    printf("START\n");
+
     if(argc != NUMBER_ARGUMENTS){
         fprintf(stderr, "Error! Usage:\n\t%s <process file> <algorithm>\n", argv[0]);
 		exit(EXIT_FAILURE);
@@ -22,9 +24,7 @@ int main(int argc, char ** argv) {
         fprintf(stderr, "Error! Invalid algorithm name. Usage:\n\t%s <process file> <algorithm>\n", argv[0]);
 		exit(EXIT_FAILURE);
     }
-
     load_processes(processes, file_name);
-
     finished_processes = run_scheduler(scheduler, processes);
     print_results(finished_processes);
     return EXIT_SUCCESS;
@@ -49,6 +49,7 @@ void print_results(Queue* processes) {
 	}
 
 	fclose(results_file);
+    printf("NUM NODES: %ld\n", count_nodes(processes));
     print_queue(processes);
 }
 
