@@ -89,6 +89,7 @@ Queue* first_come_first_serve(Scheduler* scheduler, Queue* finished_processes) {
         scheduler -> current = scheduler -> ready_queue -> head;
         /* Remove the running process from the ready queue */
         scheduler -> ready_queue -> head = scheduler -> ready_queue -> head -> next;
+        scheduler -> current -> next = NULL;
     }
     /* The burst time of the currently running process is decreased by one clock tick */
     scheduler -> current -> remaining_burst_time--;
@@ -138,7 +139,8 @@ Queue* shortest_job_first(Scheduler* scheduler, Queue* finished_processes) {
         }
         else {
             previous_shortest_job -> next = shortest_job -> next;
-        }        
+        }
+        scheduler -> current -> next = NULL;  
     }
     /* The burst time of the currently running process is decreased by one clock tick */
     scheduler -> current -> remaining_burst_time--;
