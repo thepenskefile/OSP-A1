@@ -31,7 +31,6 @@ Boolean load_processes(Queue* queue, const char* processes_file_name) {
         while(fgets(file_processes_data, (file_char_counter + 2), processes_file)){
             token = strtok(file_processes_data, "\t\n");
 
-
             while(token != NULL) {
                 strcpy(input_process_id, token);
 

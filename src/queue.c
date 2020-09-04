@@ -18,7 +18,7 @@ Boolean add_to_queue(Queue *queue, Process *process, Boolean add_to_end) {
         printf("\n Queue does not exist \n");
         return FALSE;
     }
-    /* If a queue does not exist, a node cannot be added to it */
+    /* If a process does not exist, it cannot be added to the queue */
     if(process == NULL) {
         printf("\n Process does not exist \n");
         return FALSE;
@@ -50,11 +50,10 @@ void print_queue(Queue* queue) {
     print_pointer = queue -> head;
     while(print_pointer != NULL) {
         printf(
-            "ID: %ld | Burst time: %f | Arrival time: %ld | Waiting time: %f \n", 
-            print_pointer -> id, 
-            print_pointer -> burst_time, 
-            print_pointer -> arrival_time,
-            print_pointer -> waiting_time
+            "ID: %ld | Waiting time: %f | Turnaround time: %f \n", 
+            print_pointer -> id,
+            print_pointer -> waiting_time,
+            calculate_turnaround_time(print_pointer)
         );
         print_pointer = print_pointer -> next;
     }

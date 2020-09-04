@@ -10,7 +10,6 @@ Scheduler* create_scheduler() {
     scheduler -> quantum = QUANTUM;
     scheduler -> quantum_used = 0;
     scheduler -> context_switch = CONTEXT_SWITCH;
-    scheduler -> is_first_process = TRUE;
 
     return scheduler;
 }
@@ -30,13 +29,6 @@ Queue* run_scheduler(Scheduler* scheduler, Queue* processes) {
      * */     
     while((processes -> head != NULL) || (scheduler -> ready_queue -> head != NULL) || (scheduler -> current != NULL)) {
         move_to_ready(scheduler, processes, clock);
-        printf("NODES IN PROCESSES: %d \n", count_nodes(processes));
-        print_queue(processes);
-        printf("NODES IN READY: %d \n", count_nodes(scheduler -> ready_queue));
-        print_queue(scheduler -> ready_queue);
-        if(scheduler -> current != NULL) {
-            printf("CURRENT PROCESS = ID: %d | BURST: %f | ARRIVAL: %d \n", scheduler -> current -> id, scheduler -> current -> remaining_burst_time, scheduler -> current -> arrival_time);
-        }
         run_algorithm(scheduler, finished_processes);
         tick_clock(clock);
     }
@@ -88,7 +80,6 @@ Queue* run_algorithm(Scheduler* scheduler, Queue* finished_processes) {
 
 Queue* first_come_first_serve(Scheduler* scheduler, Queue* finished_processes) {
     Process* process;
-    printf("Running FCFS \n");
     if(scheduler -> ready_queue -> head == NULL && scheduler -> current == NULL) {
         return finished_processes;
     }
@@ -113,9 +104,6 @@ Queue* first_come_first_serve(Scheduler* scheduler, Queue* finished_processes) {
         process -> waiting_time = process -> waiting_time + BURST;
         process = process -> next;
     }
-    if(scheduler -> is_first_process == TRUE) {
-        scheduler -> is_first_process = FALSE;
-    }
     return finished_processes;
 }
 
@@ -125,7 +113,6 @@ Queue* shortest_job_first(Scheduler* scheduler, Queue* finished_processes) {
     Process* previous_shortest_job = NULL;
     Process* shortest_job = NULL;
 
-    printf("Running SJF \n");
     if(scheduler -> ready_queue -> head == NULL && scheduler -> current == NULL) {
         return finished_processes;
     }
@@ -168,24 +155,26 @@ Queue* shortest_job_first(Scheduler* scheduler, Queue* finished_processes) {
         process = process -> next;
     }
 
-    if(scheduler -> is_first_process == TRUE) {
-        scheduler -> is_first_process = FALSE;
-    }
     return finished_processes;
 }
 
 Queue* round_robin(Scheduler* scheduler, Queue* finished_processes) {
     Process* process;
     Boolean context_switch_applied = FALSE;
-    printf("Running RR \n");
+    Boolean is_first_process = FALSE;
+
     if(scheduler -> ready_queue -> head == NULL && scheduler -> current == NULL) {
         return finished_processes;
+    }
+    
+    if(count_nodes(finished_processes) == 0 && scheduler -> current == NULL) {
+        is_first_process = TRUE;
     }
     /**
      * Check if maximum quantum has been used on current process. If it has, move it
      * to the end of the ready queue
      * */
-    if(scheduler -> quantum_used == QUANTUM) {
+    if(scheduler -> current != NULL && scheduler -> quantum_used == QUANTUM) {
         add_to_queue(scheduler -> ready_queue, scheduler -> current, TRUE);
         scheduler -> current = NULL;
         scheduler -> quantum_used = 0;
@@ -201,7 +190,7 @@ Queue* round_robin(Scheduler* scheduler, Queue* finished_processes) {
          * 1. The current process was not the only process in the ready queue
          * 2. The current process was not the first process
          * */
-        if(scheduler -> ready_queue -> head != NULL && scheduler -> is_first_process == FALSE) {
+        if(scheduler -> ready_queue -> head != NULL && is_first_process == FALSE) {
             scheduler -> current -> waiting_time = scheduler -> current -> waiting_time + CONTEXT_SWITCH;
             context_switch_applied = TRUE;
         }
@@ -225,11 +214,7 @@ Queue* round_robin(Scheduler* scheduler, Queue* finished_processes) {
     process = scheduler -> ready_queue -> head;
     while(process != NULL) {
         process -> waiting_time = process -> waiting_time + BURST;
-        printf("WTF");
         process = process -> next;
-    }
-    if(scheduler -> is_first_process == TRUE) {
-        scheduler -> is_first_process = FALSE;
     }
     return finished_processes;
 }

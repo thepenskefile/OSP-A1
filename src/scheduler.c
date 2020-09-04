@@ -26,22 +26,33 @@ int main(int argc, char ** argv) {
     load_processes(processes, file_name);
 
     finished_processes = run_scheduler(scheduler, processes);
-    print_statistics(finished_processes);
+    print_results(finished_processes);
     return EXIT_SUCCESS;
 }
 
-void print_statistics(Queue* processes) {
+void print_results(Queue* processes) {
+    FILE* results_file = NULL;
+	Process* current = NULL;
+	results_file = fopen(OUTPUT_FILE_NAME, "w");
 
+	current = processes -> head;	
+
+	while(current != NULL){
+        fprintf(
+            results_file,
+            "ID: %ld | Waiting time: %f | Turnaround time: %f \n", 
+            current -> id,
+            current -> waiting_time,
+            calculate_turnaround_time(current)
+        );	
+		current = current->next;
+	}
+
+	fclose(results_file);
     print_queue(processes);
+}
 
-    /*
-    Process* process;
-
-    process = processes -> head;
-    while(process != NULL) {
-        printf("WAITING TIME: %ld \n", process -> waiting_time);
-        process = process -> next;
-    }
-    */
+void print_statistics(Queue* processes) {
+    print_queue(processes);
 }
 

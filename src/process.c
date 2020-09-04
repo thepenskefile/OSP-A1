@@ -19,3 +19,7 @@ Process* create_process(long process_id, long burst_time, long arrival_time) {
 
     return process;
 }
+
+double calculate_turnaround_time(Process* process) {
+    return process -> waiting_time + process -> burst_time;
+}

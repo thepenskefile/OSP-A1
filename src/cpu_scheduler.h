@@ -21,8 +21,7 @@ typedef struct scheduler {
     Process* current;
     long quantum;
     long quantum_used;
-    double context_switch;
-    Boolean is_first_process;
+    double context_switch
 } Scheduler;
 
 Scheduler* create_scheduler();
