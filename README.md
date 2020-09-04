@@ -32,4 +32,4 @@ The processes file has already been included, so the following commands can be r
 
 ### RR
 
-`./scheduler processes fcfs`
+`./scheduler processes rr`
