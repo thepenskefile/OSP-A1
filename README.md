@@ -17,19 +17,19 @@ Assignment 1 task 2 - Implement three scheduling algorithms
 2. The program takes two command line arguments. The first is the location of the processes file. The second is the scheduling algorithm to run. The command to run takes the following format:
 
     ```
-    ./scheduler [location-of-processes-file] [fcfs | sjf | rr]`
+    ./scheduler [location-of-processes-file] [fcfs | sjf | rr]
     ```
 
-The processes file has already been included, so the following commands can be run for each algorithm, after running the `make` command in the same directory:
+The processes file has already been included in the submission, so the following commands can be run for each algorithm, after running the `make` command in the same directory:
 
-### FCFS
+### To run FCFS
 
 `./scheduler processes fcfs`
 
-### SJF
+### To run SJF
 
 `./scheduler processes sjf`
 
-### RR
+### To run RR
 
 `./scheduler processes rr`
