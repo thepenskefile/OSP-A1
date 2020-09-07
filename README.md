@@ -25,11 +25,14 @@ The processes file has already been included in the submission, so the following
 ### To run FCFS
 
 `./scheduler processes fcfs`
+results will be printed to a file named `finished_processes_fcfs`
 
 ### To run SJF
 
 `./scheduler processes sjf`
+results will be printed to a file named `finished_processes_sjf`
 
 ### To run RR
 
 `./scheduler processes rr`
+results will be printed to a file named `finished_processes_rr`

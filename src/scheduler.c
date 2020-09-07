@@ -10,8 +10,6 @@ int main(int argc, char ** argv) {
     scheduler = create_scheduler();
     processes = create_queue();
 
-    printf("START\n");
-
     if(argc != NUMBER_ARGUMENTS){
         fprintf(stderr, "Error! Usage:\n\t%s <process file> <algorithm>\n", argv[0]);
 		exit(EXIT_FAILURE);
@@ -25,15 +23,21 @@ int main(int argc, char ** argv) {
 		exit(EXIT_FAILURE);
     }
     load_processes(processes, file_name);
+    printf("WTF1");
     finished_processes = run_scheduler(scheduler, processes);
-    print_results(finished_processes);
+    print_results(finished_processes, scheduler -> algorithm);
     return EXIT_SUCCESS;
 }
 
-void print_results(Queue* processes) {
+void print_results(Queue* processes, Algorithm algorithm) {
     FILE* results_file = NULL;
 	Process* current = NULL;
-	results_file = fopen(OUTPUT_FILE_NAME, "w");
+    char output_file_name[50];
+    const char* algorithm_name = get_algorithm_name(algorithm);
+
+    strcpy(output_file_name,  OUTPUT_FILE_NAME);
+    strcat(output_file_name, algorithm_name);
+	results_file = fopen(output_file_name, "w");
 
 	current = processes -> head;	
 
@@ -48,8 +52,7 @@ void print_results(Queue* processes) {
 		current = current->next;
 	}
 
-	fclose(results_file);
-    printf("NUM NODES: %ld\n", count_nodes(processes));
+	fclose(results_file);    
     print_queue(processes);
 }
 
@@ -57,3 +60,14 @@ void print_statistics(Queue* processes) {
     print_queue(processes);
 }
 
+const char* get_algorithm_name(Algorithm algorithm) {
+    if(algorithm == FIRST_COME_FIRST_SERVE) {
+        return "fcfs";
+    }
+    else if (algorithm == SHORTEST_JOB_FIRST) {
+        return "sjf";
+    }
+    else if(algorithm == ROUND_ROBIN) {
+        return "rr";
+    }
+}

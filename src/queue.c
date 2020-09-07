@@ -39,9 +39,6 @@ Boolean add_to_queue(Queue *queue, Process *process, Boolean add_to_end) {
                 }
                 pointer = pointer -> next;
             }
-            if(process -> id == 200) {
-                printf("ADDING TO END 200\n");
-            }
         }
         else {
             process -> next = queue -> head;

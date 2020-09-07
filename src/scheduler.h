@@ -9,9 +9,10 @@
 #include "cpu_scheduler.h"
 
 #define NUMBER_ARGUMENTS 3
-#define OUTPUT_FILE_NAME "finished_processes"
+#define OUTPUT_FILE_NAME "finished_processes_"
 
-void print_results(Queue* processes);
+void print_results(Queue* processes, Algorithm algorithm);
 void print_statistics(Queue* processes);
+const char* get_algorithm_name(Algorithm algorithm);
 
 #endif
