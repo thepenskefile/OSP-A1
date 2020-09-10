@@ -1,14 +1,15 @@
-SOURCES=process.c queue.c scheduler.c clock.c scheduler_options.c
-HEADERS=process.h queue.h scheduler.h clock.h scheduler_options.h utility.h
-PROGRAM=scheduler
+SRC_DIR := src
+OBJ_DIR := obj
+BIN_DIR := .
+EXE := $(BIN_DIR)/scheduler
+
+SRC := $(wildcard $(SRC_DIR)/*.c)
+OBJ := $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 DEBUG=-g
-FLAGS=-ansi -pedantic -Wall $(DEBUG)
+FLAGS=-ansi -pedantic -w -Wall -Wextra $(DEBUG)
 
 all:
-	gcc $(FLAGS) -o $(PROGRAM) $(SOURCES)
+	gcc $(FLAGS) -o $(EXE) $(SRC)
 
 clean:
-	rm $(PROGRAM)
-
-archive:
-	zip $(USER)-OSPA1T2 $(SOURCES) $(HEADERS) Makefile
+	@$(RM) -rv $(BIN_DIR) $(OBJ_DIR)

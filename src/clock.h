@@ -6,10 +6,12 @@
 #include <string.h>
 
 typedef struct clock {
-    float current_tick;
+    int current_tick;
 } Clock;
 
+/* Function to create a clock */
 Clock* create_clock();
+/* Function to tick a clock by incrementing its current_tick by one */
 Clock* tick_clock(Clock* clock);
 
 #endif

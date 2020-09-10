@@ -1,1 +1,7 @@
 scheduler
+finished_processes
+finished_processes_fcfs
+finished_processes_sjf
+finished_processes_rr
+stats
+README.txt

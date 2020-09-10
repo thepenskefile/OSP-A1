@@ -2,8 +2,9 @@
 #define SCHEDULER_OPTIONS_H
 
 #include "utility.h"
-#include "scheduler.h"
 #include "process.h"
+#include "queue.h" 
+#include "cpu_scheduler.h"
 
 #define PROCESS_ID_LENGTH 4
 #define BURST_TIME_LENGTH 4
