@@ -26,13 +26,16 @@ The processes file has already been included in the submission, so the following
 
 `./scheduler processes fcfs`
 results will be printed to a file named `finished_processes_fcfs`
+The code implementing this algorithm can be found in `src/cpu_scheduler.c` in the function called `first_come_first_serve`
 
 ### To run SJF
 
 `./scheduler processes sjf`
 results will be printed to a file named `finished_processes_sjf`
+The code implementing this algorithm can be found in `src/cpu_scheduler.c` in the function called `shortest_job_first`
 
 ### To run RR
 
 `./scheduler processes rr`
 results will be printed to a file named `finished_processes_rr`
+The code implementing this algorithm can be found in `src/cpu_scheduler.c` in the function called `round_robin`

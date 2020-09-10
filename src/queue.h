@@ -18,9 +18,6 @@ Queue* create_queue();
 
 /* Adds a node (process) to a queue */
 Boolean add_to_queue(Queue* queue, Process* process, Boolean add_to_end);
-
-Queue* search_in_queue(Queue* queue, long process_id, Process** previous);
-remove_from_queue(Process** head_ref, long process_id);
 /* Prints the contents of a queue */
 void print_queue(Queue* queue);
 /* Counts the number of nodes in a queue */
