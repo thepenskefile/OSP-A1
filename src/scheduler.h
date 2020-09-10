@@ -14,5 +14,6 @@
 void print_results(Queue* processes, Algorithm algorithm);
 void print_statistics(Queue* processes);
 const char* get_algorithm_name(Algorithm algorithm);
+void print_box_stats(Queue* processes);
 
 #endif
